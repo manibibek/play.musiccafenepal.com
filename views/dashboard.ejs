@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <input id="searchText" type="text" name="search">
+        <hr>
+        <div class="row">
+    
+            <div class="col-md-8" id="video">
+                <iframe id="videoIframe" width="560" height="315" src="https://www.youtube.com/embed/MnpbUlSgEpg" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+    
+            <div class="col-md-4" id="playlist">
+                playlist here
+                <ul id="playlist">
+                    <li>song name 1</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+<script>
+    const url = 'https://www.googleapis.com/youtube/v3/search?'
+    const api_key = 'AIzaSyDKgTk_xgy5wokrZSEUdPxNdzx-V1ECRhM'
+    // const id = 'h8pT3hGV_Co'
+    const id = '8c1hYO_BYHY'
+    $('#searchText').keydown(
+        function (e){
+            if (e.target.value.length > 3) {
+                console.log(e);
+                
+                
+                fetch(`${url}&q=${e.target.value}&key=${api_key}&part=snippet`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    data.items.forEach(item => {
+                        $('#playlist').append('<li>'+ item.snippet.title +' </li>')
+                    });
+                    
+                        // $("#videoIframe").attr('src', "https://www.youtube.com/embed/"+ data.items[0].id)
+                    })
+                    .catch(error => console.error(error))
+                }
+                    
+        })
+</script>
